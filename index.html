@@ -1,93 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Humayun & Zaynab 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Zaynab ❤️</title>
 <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        text-align: center;
-        background-color: #ffe6f0;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-    .intro, .letter {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .letter {
-        display: none;
-        width: 80%;
-        max-width: 600px;
-    }
-    button {
-        background-color: #ff4d88;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        font-size: 18px;
-        border-radius: 25px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #e6005c;
-    }
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #ffdde1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  h1 {
+    font-size: 2rem;
+    color: #ff4f81;
+  }
+  #openBtn {
+    background: #ff4f81;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  #letter {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 600px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease-in-out;
+  }
+  #loading {
+    display: none;
+    font-size: 1rem;
+    color: #777;
+    margin-top: 15px;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 </style>
 </head>
 <body>
 
-<div class="intro">
-    <h1>Hi Zaynab ❤️</h1>
-    <p>Humayun has something special for you…</p>
-    <button onclick="startSite()">Open 💌</button>
-</div>
-
-<div class="letter">
-    <h2>Dear Zaynab 💖</h2>
-    <p id="letterContent">Loading your letter...</p>
-</div>
+<h1>Hi Zaynab ❤️ - From Humayun</h1>
+<button id="openBtn">Tap to Open Your Letter 💌</button>
+<p id="loading">Loading your letter...</p>
+<div id="letter"></div>
 
 <audio id="bgMusic" loop>
-    <source src="major.mp3" type="audio/mpeg">
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDa3xS3_meECLSmcD9KxYEPXj9SouiLrXY",
-    authDomain: "zayzayqt-4c743.firebaseapp.com",
-    projectId: "zayzayqt-4c743",
-    storageBucket: "zayzayqt-4c743.firebasestorage.app",
-    messagingSenderId: "29269112000",
-    appId: "1:29269112000:web:b8193402ab0bdd84132925",
-    measurementId: "G-T4F0SNJM08"
-  };
-  
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-  async function loadLetter() {
-      const docRef = db.collection("letters").doc("latest");
-      const docSnap = await docRef.get();
-      if (docSnap.exists) {
-          document.getElementById("letterContent").innerText = docSnap.data().content;
-      } else {
-          document.getElementById("letterContent").innerText = "No letter found 😢";
-      }
-  }
-
-  function startSite() {
-      document.querySelector(".intro").style.display = "none";
-      document.querySelector(".letter").style.display = "block";
-      document.getElementById("bgMusic").play();
-      loadLetter();
-  }
-</script>
-
-</body>
-</html>
+  // 🔹 Your Firebase config
+  c
