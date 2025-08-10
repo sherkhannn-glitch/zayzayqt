@@ -1,140 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For Zaynab 💌</title>
-  <style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Humayun & Zaynab 💖</title>
+<style>
     body {
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      background-color: #fff0f5;
-      color: #333;
-      padding: 20px;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: center;
+        background-color: #ffe6f0;
+        color: #333;
+        margin: 0;
+        padding: 0;
     }
-    #intro {
-      font-size: 24px;
-      margin-top: 20%;
-      animation: fadeIn 2s ease-in-out;
-    }
-    #letter-box {
-      display: none;
-      margin-top: 30px;
-    }
-    textarea {
-      width: 80%;
-      height: 150px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      font-size: 16px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      background: #ff85a2;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #ff5c85;
+    .intro, .letter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     .letter {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: none;
+        width: 80%;
+        max-width: 600px;
     }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    button {
+        background-color: #ff4d88;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 25px;
+        cursor: pointer;
     }
-  </style>
+    button:hover {
+        background-color: #e6005c;
+    }
+</style>
 </head>
 <body>
 
-  <!-- Background Music -->
-  <audio autoplay loop>
-    <source src="https://youtu.be/cieVCl6rfEY?si=6dzdTmfkheaMxwGK" type="audio/mp3" />
-  </audio>
+<div class="intro">
+    <h1>Hi Zaynab ❤️</h1>
+    <p>Humayun has something special for you…</p>
+    <button onclick="startSite()">Open 💌</button>
+</div>
 
-  <!-- Intro -->
-  <div id="intro">💖 Hi, I’m Humayun… and this is for my Zaynab 💖</div>
+<div class="letter">
+    <h2>Dear Zaynab 💖</h2>
+    <p id="letterContent">Loading your letter...</p>
+</div>
 
-  <!-- Letter Box -->
-  <div id="letter-box">
-    <h2>💌 Write a Letter for Zaynab</h2>
-    <textarea id="letterInput" placeholder="Write something sweet..."></textarea><br>
-    <button onclick="saveLetter()">Send Letter</button>
+<audio id="bgMusic" loop>
+    <source src="YOUR-MUSIC-FILE.mp3" type="audio/mpeg">
+</audio>
 
-    <h2>📜 Letters</h2>
-    <div id="letters"></div>
-  </div>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDa3xS3_meECLSmcD9KxYEPXj9SouiLrXY",
+    authDomain: "zayzayqt-4c743.firebaseapp.com",
+    projectId: "zayzayqt-4c743",
+    storageBucket: "zayzayqt-4c743.firebasestorage.app",
+    messagingSenderId: "29269112000",
+    appId: "1:29269112000:web:b8193402ab0bdd84132925",
+    measurementId: "G-T4F0SNJM08"
+  };
+  
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-  <!-- Firebase Scripts -->
-  <script type="module">
-    // Firebase Config
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } 
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  async function loadLetter() {
+      const docRef = db.collection("letters").doc("latest");
+      const docSnap = await docRef.get();
+      if (docSnap.exists) {
+          document.getElementById("letterContent").innerText = docSnap.data().content;
+      } else {
+          document.getElementById("letterContent").innerText = "No letter found 😢";
+      }
+  }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDa3xS3_meECLSmcD9KxYEPXj9SouiLrXY",
-      authDomain: "zayzayqt-4c743.firebaseapp.com",
-      projectId: "zayzayqt-4c743",
-      storageBucket: "zayzayqt-4c743.firebasestorage.app",
-      messagingSenderId: "29269112000",
-      appId: "1:29269112000:web:b8193402ab0bdd84132925",
-      measurementId: "G-T4F0SNJM08"
-    };
-
-    // Init
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Save Letter
-    async function saveLetter() {
-      const text = document.getElementById("letterInput").value;
-      if (!text.trim()) return;
-      await addDoc(collection(db, "letters"), {
-        text,
-        timestamp: serverTimestamp()
-      });
-      document.getElementById("letterInput").value = "";
-      loadLetters();
-    }
-
-    // Load Letters
-    async function loadLetters() {
-      const q = query(collection(db, "letters"), orderBy("timestamp", "desc"));
-      const snapshot = await getDocs(q);
-      const lettersDiv = document.getElementById("letters");
-      lettersDiv.innerHTML = "";
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "letter";
-        div.innerText = data.text;
-        lettersDiv.appendChild(div);
-      });
-    }
-
-    // Show letters after intro
-    setTimeout(() => {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("letter-box").style.display = "block";
-      loadLetters();
-    }, 3000);
-  </script>
+  function startSite() {
+      document.querySelector(".intro").style.display = "none";
+      document.querySelector(".letter").style.display = "block";
+      document.getElementById("bgMusic").play();
+      loadLetter();
+  }
+</script>
 
 </body>
 </html>
-
-
