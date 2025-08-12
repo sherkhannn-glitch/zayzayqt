@@ -1,171 +1,173 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>For Zaynab — From Humayun</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Pink Diary</title>
+<style>
+body {
+  background: #ffe4ec;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Segoe Script', cursive;
+  margin: 0;
+}
 
-  <!-- Google font (optional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+.book {
+  width: 600px;
+  height: 400px;
+  perspective: 2000px;
+  position: relative;
+}
 
-  <style>
-    :root{
-      --bg:#fff7fb; --card:#fff; --accent:#ff5f92; --muted:#7b6f7a;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial;
-      background: radial-gradient(800px 400px at 10% 20%, rgba(255,95,146,0.06), transparent),
-                  radial-gradient(600px 300px at 90% 80%, rgba(255,200,230,0.04), transparent),
-                  var(--bg);
-      display:flex;align-items:center;justify-content:center;padding:28px;
-      color:#222;
-    }
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: left;
+  transition: transform 1s ease;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  background: white;
+  overflow: hidden;
+}
 
-    .wrap{
-      width:100%;max-width:920px;background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(255,255,255,0.95));
-      border-radius:20px;box-shadow:0 20px 50px rgba(11,10,18,0.08);padding:30px;position:relative;overflow:hidden;
-    }
+/* Cover style */
+.cover {
+  background: pink;
+  background-image: radial-gradient(circle at top left, #ffb6c1, pink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+  z-index: 100;
+}
 
-    /* floating hearts (cute background effect) */
-    .heart{
-      position:absolute;width:18px;height:18px;background:var(--accent);transform:rotate(45deg);
-      left:50%;top:50%;opacity:0.9;border-radius:3px;box-shadow:0 6px 18px rgba(255,95,146,0.12);
-      animation:float 6s linear infinite;
-    }
-    .heart:before, .heart:after{content:"";position:absolute;background:var(--accent);border-radius:50%;}
-    .heart:before{width:18px;height:18px;left:-9px;top:0}
-    .heart:after{width:18px;height:18px;left:0;top:-9px}
-    @keyframes float{
-      0%{transform:translateY(0) rotate(45deg);opacity:0.9}
-      50%{opacity:0.45}
-      100%{transform:translateY(-420px) rotate(45deg);opacity:0}
-    }
+.page-content {
+  padding: 20px;
+  text-align: center;
+}
+.page-content img {
+  max-width: 100%;
+  max-height: 250px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
 
-    header{display:flex;align-items:center;gap:14px}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#ff8fb2,#b988ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 10px 30px rgba(120,80,160,0.08)}
-    h1{margin:0;font-size:20px}
-    p.lead{margin:4px 0 0;color:var(--muted)}
+/* Hearts animation */
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.8);
+  font-size: 24px;
+  animation: float 6s linear infinite;
+}
 
-    .intro{
-      margin-top:22px;text-align:center;
-    }
-    .openBtn{
-      margin-top:18px;background:linear-gradient(90deg,var(--accent),#b77bff);color:#fff;border:none;padding:12px 26px;border-radius:30px;font-weight:600;cursor:pointer;
-      box-shadow:0 8px 24px rgba(183,123,255,0.16);
-    }
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-300px) scale(1.5); opacity: 0; }
+}
 
-    .content{display:none;margin-top:28px}
-    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 8px 30px rgba(11,10,18,0.04)}
-    .letter{white-space:pre-wrap;font-size:16px;line-height:1.6;color:#222}
-    .meta{margin-top:12px;color:var(--muted);font-size:13px}
-
-    footer{margin-top:20px;text-align:center;color:var(--muted);font-size:13px}
-
-    /* small responsiveness */
-    @media (max-width:640px){ .wrap{padding:18px} h1{font-size:18px} .logo{width:48px;height:48px} }
-  </style>
+/* Navigation */
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+button {
+  padding: 10px 15px;
+  background: pink;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+}
+button:hover {
+  background: #ffb6c1;
+}
+</style>
 </head>
 <body>
-  <div class="wrap" id="wrap">
 
-    <!-- a few decorative hearts (clone by JS for variety) -->
-    <div id="heartsContainer"></div>
-
-    <header>
-      <div class="logo">H & Z</div>
-      <div>
-        <h1>For Zaynab — From Humayun</h1>
-        <p class="lead">A small corner where I save my daily letters for you.</p>
-      </div>
-    </header>
-
-    <div class="intro">
-      <div style="font-size:18px">Hi Zaynab ❤️ — I made something just for you.</div>
-      <button class="openBtn" id="openBtn">Open 💌</button>
-    </div>
-
-    <div class="content" id="content">
-      <div class="card">
-        <!-- EDIT THIS: replace the text below with your new letter each day -->
-        <div class="letter" id="letterText">
-Dear Zaynab,
-
-You are my favorite hello and my hardest goodbye. Every little thing you do makes my day brighter — and I keep finding new reasons to smile because of you.
-
-Love,
-Humayun
-        </div>
-        <!-- ----------- end editable area ------------ -->
-        <div class="meta">Last updated: <span id="updatedAt">Edit this in the HTML</span></div>
-      </div>
-
-      <footer>
-        Tip: kISSES PASAND HAY MUJHE
-      </footer>
-    </div>
-
+<div class="book" id="book">
+  <div class="page cover">
+    My Diary
+    <span class="heart" style="left:20px; animation-delay: 0s;">❤</span>
+    <span class="heart" style="left:100px; animation-delay: 2s;">❤</span>
+    <span class="heart" style="left:200px; animation-delay: 4s;">❤</span>
   </div>
 
-  <!-- AUDIO (replace the src with your own MP3 if you want) -->
-  <audio id="bgAudio" loop>
-    <!-- royalty-free example (you can replace) -->
-    <source src="major.mp3" type="audio/mpeg">
-    <!-- If you host your own MP3, replace the src above with the file URL -->
-  </audio>
+  <div class="page"><div class="page-content">
+    <h2>Page 1</h2>
+    <p>My love, you are the most beautiful part of my world. Every smile of yours is like sunshine breaking through clouds. 💖</p>
+    <img src="2.jpg" alt="Page 1 Image">
+  </div></div>
 
-  <script>
-    // small helper: create a few floating hearts with random position & timings
-    (function createHearts(){
-      const container = document.getElementById('heartsContainer');
-      for(let i=0;i<8;i++){
-        const h = document.createElement('div');
-        h.className='heart';
-        // randomize start position & duration slightly
-        h.style.left = (10 + Math.random()*80)+'%';
-        h.style.top = (60 + Math.random()*30)+'%';
-        h.style.animationDelay = (Math.random()*3)+'s';
-        h.style.transform = `translateY(${Math.random()*10}px) rotate(45deg)`;
-        h.style.opacity = 0.9 - Math.random()*0.5;
-        h.style.width = h.style.height = (12 + Math.random()*18)+'px';
-        container.appendChild(h);
-      }
-    })();
+  <div class="page"><div class="page-content">
+    <h2>Page 2</h2>
+    <p>You are so brave. I know life hasn’t always been easy for you, but you fight through your pain and keep moving forward. 🌸</p>
+    <img src="3.jpg" alt="Page 2 Image">
+  </div></div>
 
-    // Open button logic: start music and show content
-    const openBtn = document.getElementById('openBtn');
-    const content = document.getElementById('content');
-    const intro = document.querySelector('.intro');
-    const audio = document.getElementById('bgAudio');
+  <div class="page"><div class="page-content">
+    <h2>Page 3</h2>
+    <p>Your eyes carry stories, your heart carries love, and your soul carries strength. I am lucky to know you. ✨</p>
+    <img src="4.jpg" alt="Page 3 Image">
+  </div></div>
 
-    openBtn.addEventListener('click', async () => {
-      // start audio (user interaction required by browsers)
-      try { await audio.play(); }
-      catch(e){ console.log('audio play failed', e); }
+  <div class="page"><div class="page-content">
+    <h2>Page 4</h2>
+    <p>No matter where life takes us, my heart will always find its way back to you. 💕</p>
+    <img src="5.jpg" alt="Page 4 Image">
+  </div></div>
+</div>
 
-      // fade intro -> content (simple)
-      intro.style.display = 'none';
-      content.style.display = 'block';
-      // optional: set last-updated timestamp automatically (or edit in HTML)
-      const updated = document.getElementById('updatedAt');
-      const now = new Date();
-      updated.textContent = now.toLocaleString();
-    });
+<div class="controls">
+  <button id="prev">◀ Prev</button>
+  <button id="next">Next ▶</button>
+</div>
 
-    // Keyboard accessibility: Enter to open
-    openBtn.addEventListener('keyup', (e)=>{ if(e.key === 'Enter') openBtn.click(); });
+<script>
+const pages = document.querySelectorAll('.page');
+let current = 0;
 
-    // Helpful: allow spacebar or click on background to open (optional)
-    document.addEventListener('keydown', (e)=>{ if(e.key === ' ' && content.style.display === 'none') { e.preventDefault(); openBtn.click(); } });
+// Set stacking order
+pages.forEach((page, index) => {
+  page.style.zIndex = pages.length - index;
+});
 
-    // Defensive: if audio is missing/broken, log
-    audio.addEventListener('error', ()=>console.log('Background audio failed to load. Replace the src with a working mp3 link.'));
+function updatePages() {
+  pages.forEach((page, index) => {
+    if (index < current) {
+      page.style.transform = 'rotateY(-180deg)';
+    } else {
+      page.style.transform = 'rotateY(0deg)';
+    }
+  });
+}
 
-  </script>
+document.getElementById('next').addEventListener('click', () => {
+  if (current < pages.length) {
+    current++;
+    updatePages();
+  }
+});
+
+document.getElementById('prev').addEventListener('click', () => {
+  if (current > 0) {
+    current--;
+    updatePages();
+  }
+});
+</script>
+
 </body>
 </html>
-
-
-
