@@ -134,7 +134,19 @@ button:hover {
   <button id="prev">◀ Prev</button>
   <button id="next">Next ▶</button>
 </div>
+<audio id="bgmusic" autoplay loop muted>
+  <source src="major.mp3" type="audio/mpeg">
+</audio>
 
+<script>
+  const music = document.getElementById("bgmusic");
+
+  // Wait for first click/tap anywhere on page, then unmute
+  document.addEventListener("click", () => {
+    music.muted = false;
+    music.play();
+  }, { once: true });
+</script>
 <script>
 const pages = document.querySelectorAll('.page');
 let current = 0;
@@ -171,3 +183,4 @@ document.getElementById('prev').addEventListener('click', () => {
 
 </body>
 </html>
+
